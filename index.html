@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jigsaw</title>
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <style type="text/css">
+     *{
+     	margin: 0px;
+     	padding: 0px;
+     }
+    .message{
+    	line-height: 30px;
+    	margin: 80px auto;
+    	text-align: center;
+    	font-weight: bold;
+    	color: #666666;
+    	font-size: 30px;
+    }
+  	.container{
+  		height: 390px;
+  		width: 540px;
+  		margin: 100px auto;
+  	}
+  	li{
+  		list-style: none;
+  		float: left;
+  	}
+  	img{
+  		height: 130px;
+  		width: 180px;
+  	}
+  </style>
+</head>
+<body>
+	<div class="message">
+		Good Luck!
+	</div>
+	<div class="container">
+		<ul>
+			<li draggable="true"><img src="1.png"></li>
+			<li draggable="true"><img src="3.png"></li>
+			<li draggable="true"><img src="6.png"></li>
+			<li draggable="true"><img src="2.png"></li>
+			<li draggable="true"><img src="9.png"></li>
+			<li draggable="true"><img src="8.png"></li>
+			<li draggable="true"><img src="5.png"></li>
+			<li draggable="true"><img src="4.png"></li>
+			<li draggable="true"><img src="7.png"></li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		let dragSrc;
+		let usedNumber=0;
+		$("li").each(function(index,element){
+				$(element).on("dragstart", function(event){
+					dragSrc=this;
+					event.originalEvent.dataTransfer.setData("text/html", this.innerHTML);
+				}).on("dragover", function(event){
+					event.preventDefault();
+				}).on("drop", function(event){
+					if (dragSrc!=this) {
+						dragSrc.innerHTML=this.innerHTML;
+						this.innerHTML=event.originalEvent.dataTransfer.getData("text/html");
+						//count used steps
+						usedNumber++;
+						$(".message").get(0).innerHTML='<span>'+"You have used "+usedNumber+" steps."+'</span>';
+					}
+				})
+			})
+	</script>
+</body>
+</html>
